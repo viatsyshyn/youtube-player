@@ -1,0 +1,55 @@
+doctype html
+html
+  head
+    title Youtube Player Custom controls
+
+    link(href="../src/index.css" type="text/css" rel="stylesheet")
+
+    script(src="//www.youtube.com/iframe_api")
+    script(src="bower/jquery/dist/jquery.js")
+    script(src="../src/youtube-player-compiled.js")
+    script(src="index-compiled.js")
+
+    style(type="text/css").
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700);
+
+      BODY { font-family: 'Roboto', sans-serif; color: #6e717c; }
+      .video-player { margin-bottom: 50px; }
+      .wrapper { padding: 100px }
+
+
+  body
+    .wrapper
+      .video-player(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg)" video-id="z9mq0zGNydY")
+        .video-cnt
+        .sound-bar
+          .level
+          .mute
+          .full
+        .timer
+        .play-pause
+        .progress-bar: .elapsed
+
+    .wrapper
+      .video-player(style="background-image: url(https://i.ytimg.com/vi/QwhPOlIuSXM/maxresdefault.jpg)" video-id="QwhPOlIuSXM")
+        .video-cnt
+        .play-pause
+        .progress-bar: .elapsed
+
+    .wrapper
+      .video-player(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg); height: 360px; width: 640px; margin: 0 auto 50px" video-id="ZZJPnAer7EM")
+        .video-cnt
+        .sound-bar
+          .level
+          .mute
+          .full
+        .timer
+        .play-pause
+        .progress-bar: .elapsed
+
+    .wrapper
+      .video-player(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg); height: 160px; width: 640px; margin: 0 auto 50px" video-id="ZZJPnAer7EM")
+        .video-cnt
+        .play-pause
+        .timer
+        .progress-bar: .elapsed

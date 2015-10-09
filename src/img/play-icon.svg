@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: bin/sketchtool 1.4 (305) - http://www.bohemiancoding.com/sketch -->
+    <title>play</title>
+    <desc>Created with bin/sketchtool.</desc>
+    <defs>
+        <path d="M25,50 C38.8071187,50 50,38.8071187 50,25 C50,11.1928813 38.8071187,0 25,0 C11.1928813,0 0,11.1928813 0,25 C0,38.8071187 11.1928813,50 25,50 Z M32.9725647,25.2820476 L20.8900098,31.9965999 C20.7505017,32.0754524 20.6307085,32.0845506 20.5306266,32.0238949 C20.4305447,31.9632392 20.3805045,31.8540606 20.3805045,31.6963557 L20.3805045,18.3036443 C20.3805045,18.1459394 20.4305447,18.0367608 20.5306266,17.9761051 C20.6307085,17.9154494 20.7505017,17.9245476 20.8900098,18.0034001 L32.9725647,24.7179524 C33.1120728,24.7968048 33.1818258,24.8908197 33.1818258,25 C33.1818258,25.1091803 33.1120728,25.2031952 32.9725647,25.2820476 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="landing-page" sketch:type="MSArtboardGroup" transform="translate(-725.000000, -347.000000)">
+            <g id="Video-player" sketch:type="MSLayerGroup" transform="translate(-50.000000, 73.000000)">
+                <g id="play" transform="translate(775.000000, 274.000000)">
+                    <g>
+                        <use fill="#FFFFFF" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                        <use fill="none" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "youtube-player",
+  "version": "0.0.0",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    ".*/*",
+    "node_modules",
+    "src",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.0"
+  },
+  "devDependencies": {}
+}

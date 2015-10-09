@@ -1,0 +1,149 @@
+.video-player
+  color: $ui-color
+  height: 600px
+  +transition(height 0.45s linear)
+  overflow: hidden
+  background-size: cover !important
+  background: transparent 50% 50% no-repeat
+
+  &, *
+    position: relative
+
+  &::after
+    content: ' '
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    +transition(opacity .2s ease-out)
+    opacity: 1
+    background: transparentize($fade-color, .5)
+    z-index: 1
+
+  &.playing::after
+    opacity: 0
+
+  .video-cnt
+    background: black
+
+    display: none
+    position: absolute
+    top: 50%
+    left: 50%
+    +transform(translate(-50%, -50%))
+
+    &.initialized
+      display: block
+
+  .sound-bar, .timer, .play-pause, .progress-bar, .elapsed, .level
+    position: absolute
+
+  .sound-bar, .timer, .progress-bar, .play-pause
+    +transition(opacity .3s linear)
+
+  .play-pause
+    opacity: .5
+    top: 50%
+    left: 50%
+    height: 6vw
+    width: 6%
+    +transform(translate(-50%, -50%))
+    background: url(img/play-icon.svg) 50% 50% no-repeat
+    background-size: contain
+    border-radius: 50%
+    z-index: 2
+
+  .sound-bar, .play-pause, .progress-bar
+    cursor: pointer
+
+  .sound-bar, .timer, .progress-bar
+    opacity: 0
+    z-index: 2
+
+  &.playing
+    .play-pause
+      opacity: 0
+
+    .progress-bar
+      opacity: .3
+
+  &.playing:hover
+    .sound-bar, .timer, .progress-bar, .play-pause
+      opacity: .6
+
+  .sound-bar
+    bottom: 50px
+    left: 30%
+    right: 30%
+    height: 8px
+    border-radius: 4px
+    background: transparentize($ui-color, .6)
+
+    .level
+      left: 0
+      top: 0
+      bottom: 0
+      background: inherit
+      +transition(width .2s linear)
+
+    .mute, .full
+      position: absolute
+      top: -6px
+      bottom: -6px
+      width: 20px
+      cursor: pointer
+
+    .mute
+      left: -40px
+      background: url("img/mute-icon.svg") 50% 50% no-repeat
+
+    .full
+      right: -40px
+      background: url("img/sound-icon.svg") 50% 50% no-repeat
+
+  .progress-bar
+    bottom: 0
+    left: 0
+    right: 0
+    height: 12px
+    background: transparentize($ui-color, .6)
+
+    .elapsed
+      left: 0
+      top: 0
+      bottom: 0
+      background: inherit
+      +transition(width 1s linear)
+
+      &.quick-animation
+        +transition(width .1s linear)
+
+
+  .timer
+    font-weight: 400
+    letter-spacing: 1px
+    line-height: 20px
+    right: 30px
+    bottom: 42px
+    font-size: 15px
+
+
+  &.mobile
+    +transition(none)
+
+    .video-cnt
+      display: none
+
+    &.playing
+      .video-cnt
+        z-index: 2
+        display: block
+
+    .play-pause, .progress-bar, .sound-bar, .timer
+      display: none !important
+
+    .video-player
+      height: 200px
+      +transition(none)
+
