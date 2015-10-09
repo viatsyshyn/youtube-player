@@ -92,27 +92,31 @@
                 switch (newState.data) {
                   case 0: //ended
                     stop(true);
-                    $videoPlayer.trigger('ended');
                     break;
 
                   case 2: //paused
                     pause(true);
-                    $videoPlayer.trigger('paused');
                     break;
 
                   case 1: //playing
                     $videoCnt.show();
-                    $videoPlayer.addClass('playing').trigger('playing');
-                    interval = setInterval(function () {
-                      $timer.show().html('<strong>' + toTime(player.getCurrentTime()) + '</strong> / ' + toTime(player.getDuration()));
-                      $elapsed.width(100 * player.getCurrentTime() / player.getDuration() + '%');
-                    }, 1000);
+                    $videoPlayer.addClass('playing');
+
+                    setTimeout(() => $videoPlayer.trigger('playing'), 1);
+
+                    interval = setInterval(updateProgressBarAndTimer, 1000);
+
                     break;
                 }
               }
             }
           });
         });
+
+        function updateProgressBarAndTimer() {
+          $timer.show().html('<strong>' + toTime(player.getCurrentTime()) + '</strong> / ' + toTime(player.getDuration()));
+          $elapsed.width(100 * player.getCurrentTime() / player.getDuration() + '%');
+        }
 
         $progress.click(function (e) {
           var ratio = (e.pageX - $progress.offset().left) / $progress.outerWidth();
@@ -167,34 +171,35 @@
             currentVideoId = videoId;
           }
 
-          setTimeout(function () {
-            player && player.playVideo();
-          }, isAbsolute ? 150 : 1000);
+          setTimeout(() => player && player.playVideo(), isAbsolute ? 150 : 1000);
         }
 
         function pause(isEvent_) {
-          if (!isMobile) {
-            $videoPlayer.removeClass('playing');
-          }
+          isMobile || $videoPlayer.removeClass('playing');
           $wnd.off('resize.' + videoPlayer_id);
           $videoPlayer.css('height', initialHeight || '');
           clearInterval(interval);
           isEvent_ || player && player.pauseVideo();
+
+          setTimeout(() => $videoPlayer.trigger('paused'), 1);
         }
 
         function stop(isEvent_) {
-          pause(isEvent_);
           $videoCnt.hide();
           $elapsed.width(0);
           isEvent_ || player && player.stopVideo();
+
+          setTimeout(() => $videoPlayer.trigger('ended'), 34);
         }
 
-        return {
+        $videoPlayer.data('youtube-player', {
           play: play,
           pause: pause,
           stop: stop
-        }
+        });
       });
+
+      return this;
     }
   });
 
