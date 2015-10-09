@@ -10,6 +10,7 @@
       .on('ended', x => $(x.target).parent().css('background', 'red'))
       .on('paused', x => $(x.target).parent().css('background', 'yellow'))
       .on('playing', x => $(x.target).parent().css('background', 'green'))
+      .on('initialized', x => $(x.target).parent().css('background', 'skyblue'))
       .youtube_player();
 
     $('button.play-pause').click(function () {

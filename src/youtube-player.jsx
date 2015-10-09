@@ -58,11 +58,11 @@
         $videoPlayer.toggleClass('mobile', isMobile);
         $videoCnt.attr('id', videoPlayer_id);
 
-        queuePlayerInit(function () {
-          player = new YT.Player(videoPlayer_id, {
+        queuePlayerInit(() => {
+          new YT.Player(videoPlayer_id, {
             videoId: currentVideoId,
             playerVars: {
-              autoplay: $videoPlayer.hasClass('playing') ? 1 : 0,
+              autoplay: 0,
               controls: 0,
               //hl: 'uk-ua',
               modestbranding: 1,
@@ -74,42 +74,47 @@
               theme: 'light'
             },
             events: {
-              'onReady': function (event) {
-                player = event.target;
-                $videoCnt = $('#' + videoPlayer_id).hide().addClass('initialized');
-                $level.width(player.getVolume() + '%');
-
-                player.setSize($videoPlayer.width(), $videoPlayer.height());
-
-                if (isMobile) {
-                  $videoCnt.show();
-                  $videoPlayer.addClass('playing');
-                }
-              },
-              'onStateChange': function (newState) {
-                switch (newState.data) {
-                  case 0: //ended
-                    stop(true);
-                    break;
-
-                  case 2: //paused
-                    pause(true);
-                    break;
-
-                  case 1: //playing
-                    $videoCnt.show();
-                    $videoPlayer.addClass('playing');
-
-                    setTimeout(() => $videoPlayer.trigger('playing'), 1);
-
-                    interval = setInterval(updateProgressBarAndTimer, 1000);
-
-                    break;
-                }
-              }
+              'onReady': onPlayerReady,
+              'onStateChange': onPlayerStateChange
             }
           });
         });
+
+        function onPlayerStateChange(newState) {
+          switch (newState.data) {
+            //ended
+            case 0:
+              stop(true);
+              break;
+
+            //playing
+            case 1:
+              onPlayStart();
+              break;
+
+            //paused
+            case 2:
+              pause(true);
+              break;
+          }
+        }
+
+        function onPlayerReady(event) {
+          player = event.target;
+
+          $videoCnt = $('#' + videoPlayer_id).hide().addClass('initialized');
+          $level.width(player.getVolume() + '%');
+
+          if ($videoPlayer.hasClass('starting'))
+            setTimeout(x => play(), 1);
+
+          $videoPlayer.removeClass('starting').trigger('initialized');
+
+          if (isMobile) {
+            $videoCnt.show();
+            $videoPlayer.addClass('playing');
+          }
+        }
 
         function updateProgressBarAndTimer() {
           $timer.show().html('<strong>' + toTime(player.getCurrentTime()) + '</strong> / ' + toTime(player.getDuration()));
@@ -140,20 +145,20 @@
         });
 
         function onWindowResize() {
-          var navBarHeight = $('.navbar').height(),
-            bodyHeight = Math.ceil($body.height()),
-            pageHeight = bodyHeight - navBarHeight,
-            videoWidth = Math.ceil($videoPlayer.width()),
-            videoHeight = Math.ceil(9 * videoWidth / 16),
-            isAbsolute = $videoCnt.hasClass('absolute');
+          var isAbsolute = $videoCnt.hasClass('absolute'),
+            playerWidth = Math.ceil($videoPlayer.width()),
+            pageHeight = Math.ceil($body.height()) - (options ? options.offsetTop | 0 : 0),
+            videoWidth = playerWidth,
+            videoHeight = Math.ceil(9 * videoWidth / 16);
 
-          if (isAbsolute && videoHeight < pageHeight) {
+          if (isAbsolute && videoHeight < pageHeight)
             videoHeight = pageHeight;
-            videoWidth = Math.ceil(16 * pageHeight / 9);
-          }
+
+          videoHeight = Math.min(videoHeight, pageHeight);
+          videoWidth = Math.ceil(16 * videoHeight / 9);
 
           if (!$videoPlayer.hasClass('fixed-height'))
-            $videoPlayer.css('height', Math.min(videoHeight, pageHeight) + 'px');
+            $videoPlayer.css('height', videoHeight + 'px');
 
           player && player.setSize(videoWidth, videoHeight);
 
@@ -169,7 +174,19 @@
             currentVideoId = videoId;
           }
 
+          player || $videoPlayer.addClass('starting');
+
           setTimeout(() => player && player.playVideo(), isAbsolute ? 150 : 600);
+        }
+
+        function onPlayStart() {
+          $videoCnt.show();
+          $videoPlayer.addClass('playing');
+          onWindowResize();
+
+          setTimeout(() => $videoPlayer.trigger('playing'), 1);
+
+          interval = setInterval(updateProgressBarAndTimer, 1000);
         }
 
         function pause(isEvent_) {
@@ -183,6 +200,8 @@
         }
 
         function stop(isEvent_) {
+          isEvent_ && pause(isEvent_);
+          
           $videoCnt.hide();
           $elapsed.width(0);
           isEvent_ || player && player.stopVideo();
