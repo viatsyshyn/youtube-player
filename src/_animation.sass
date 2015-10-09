@@ -1,0 +1,24 @@
+.video-player
+  +transition(height 0.45s linear)
+
+  &::after
+    +transition(opacity .2s ease-out)
+
+  .sound-bar, .timer, .progress-bar, .play-pause
+    +transition(opacity .3s linear)
+
+
+  .sound-bar .level
+    +transition(width .2s linear)
+
+  .progress-bar .elapsed
+    +transition(width 1s linear)
+
+    &.quick-animation
+      +transition(width .1s linear)
+
+  &.mobile
+    +transition(none)
+
+    .video-player
+      +transition(none)

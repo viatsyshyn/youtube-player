@@ -1,7 +1,6 @@
 .video-player
   color: $ui-color
-  height: 600px
-  +transition(height 0.45s linear)
+  height: $ui-player-height
   overflow: hidden
   background-size: cover !important
   background: transparent 50% 50% no-repeat
@@ -16,17 +15,15 @@
     left: 0
     right: 0
     bottom: 0
-    +transition(opacity .2s ease-out)
     opacity: 1
-    background: transparentize($fade-color, .5)
+    background: $ui-fade-color
     z-index: 1
 
   &.playing::after
     opacity: 0
 
   .video-cnt
-    background: black
-
+    background: $ui-video-container-bg
     display: none
     position: absolute
     top: 50%
@@ -39,9 +36,6 @@
   .sound-bar, .timer, .play-pause, .progress-bar, .elapsed, .level
     position: absolute
 
-  .sound-bar, .timer, .progress-bar, .play-pause
-    +transition(opacity .3s linear)
-
   .play-pause
     opacity: .5
     top: 50%
@@ -49,10 +43,13 @@
     height: 6vw
     width: 6%
     +transform(translate(-50%, -50%))
-    background: url(img/play-icon.svg) 50% 50% no-repeat
+    background: url($ui-play-icon-img) 50% 50% no-repeat
     background-size: contain
     border-radius: 50%
     z-index: 2
+
+  &.playing .play-pause
+    background-image: url($ui-paused-icon-img)
 
   .sound-bar, .play-pause, .progress-bar
     cursor: pointer
@@ -78,14 +75,13 @@
     right: 30%
     height: 8px
     border-radius: 4px
-    background: transparentize($ui-color, .6)
+    background: $ui-sound-bar-bg
 
     .level
       left: 0
       top: 0
       bottom: 0
-      background: inherit
-      +transition(width .2s linear)
+      background: $ui-sound-bar-fg
 
     .mute, .full
       position: absolute
@@ -96,29 +92,24 @@
 
     .mute
       left: -40px
-      background: url("img/mute-icon.svg") 50% 50% no-repeat
+      background: url($ui-mute-icon-img) 50% 50% no-repeat
 
     .full
       right: -40px
-      background: url("img/sound-icon.svg") 50% 50% no-repeat
+      background: url($ui-full-icon-img) 50% 50% no-repeat
 
   .progress-bar
     bottom: 0
     left: 0
     right: 0
     height: 12px
-    background: transparentize($ui-color, .6)
+    background: $ui-progress-bar-bg
 
     .elapsed
       left: 0
       top: 0
       bottom: 0
-      background: inherit
-      +transition(width 1s linear)
-
-      &.quick-animation
-        +transition(width .1s linear)
-
+      background: $ui-progress-bar-fg
 
   .timer
     font-weight: 400
@@ -127,11 +118,13 @@
     right: 30px
     bottom: 42px
     font-size: 15px
+    color: $ui-timer-color
+
+    strong
+      color: $ui-timer-strong-color
 
 
   &.mobile
-    +transition(none)
-
     .video-cnt
       display: none
 
@@ -144,6 +137,4 @@
       display: none !important
 
     .video-player
-      height: 200px
-      +transition(none)
-
+      height: $ui-mibile-player-height
