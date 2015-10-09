@@ -36,8 +36,6 @@
   $.fn.extend({
     youtube_player: function (options) {
       this.each(function () {
-        console.info(this);
-
         var $wnd = $(window),
           $body = $('body'),
           $videoPlayer = $(this),
@@ -171,7 +169,7 @@
             currentVideoId = videoId;
           }
 
-          setTimeout(() => player && player.playVideo(), isAbsolute ? 150 : 1000);
+          setTimeout(() => player && player.playVideo(), isAbsolute ? 150 : 600);
         }
 
         function pause(isEvent_) {
