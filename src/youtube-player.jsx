@@ -150,8 +150,8 @@
             videoWidth = Math.ceil(16 * pageHeight / 9);
           }
 
-          //$parent.css('height', Math.min(videoHeight, pageHeight) + 'px');
-          $videoPlayer.css('height', Math.min(videoHeight, pageHeight) + 'px');
+          if (!$videoPlayer.hasClass('fixed-height'))
+            $videoPlayer.css('height', Math.min(videoHeight, pageHeight) + 'px');
 
           player && player.setSize(videoWidth, videoHeight);
 
