@@ -55,7 +55,7 @@
 
         var interval = null,
           player = null,
-          currentVideoId = null;
+          currentVideoId = videoId;
 
         $videoPlayer.toggleClass('mobile', isMobile);
         $videoCnt.attr('id', videoPlayer_id);
