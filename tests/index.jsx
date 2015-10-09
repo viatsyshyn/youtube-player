@@ -7,9 +7,9 @@
 
   $(function () {
     $('.video-player')
-      .on('ended', x => $(this).parent().css('background', 'red'))
-      .on('paused', x => $(this).parent().css('background', 'yellow'))
-      .on('playing', x => $(this).parent().css('background', 'green'))
+      .on('ended', x => $(x.target).parent().css('background', 'red'))
+      .on('paused', x => $(x.target).parent().css('background', 'yellow'))
+      .on('playing', x => $(x.target).parent().css('background', 'green'))
       .youtube_player();
   })
 
