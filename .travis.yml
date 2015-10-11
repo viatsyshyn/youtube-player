@@ -11,7 +11,7 @@ script:
 - babel --out-file ./dist/youtube-player-compiled.js ./src/youtube-player.jsx
 - uglifyjs ./dist/youtube-player-compiled.js -o ./dist/youtube-player-compiled.min.js -c -m -r jQuery
 before_deploy:
-- cp ./src/img/* ./dist/img/
+- cp -r ./src/img ./dist
 - tar -zcvf youtube-player-$TRAVIS_TAG.tar.gz dist src README.md LICENSE
 deploy:
   edge: true
