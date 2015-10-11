@@ -12,12 +12,11 @@ script:
 - uglifyjs ./dist/youtube-player-compiled.js -o ./dist/youtube-player-compiled.min.js -c -m -r jQuery
 before_deploy:
 - cp -r ./src/img ./dist
-- tar -zcvf youtube-player-$TRAVIS_TAG.tar.gz dist src README.md LICENSE
+- tar -zcvf youtube-player.dist.tar.gz dist src README.md LICENSE
 deploy:
   edge: true
   provider: releases
-  file: youtube-player-$TRAVIS_TAG.tar.gz
-  release-number: $TRAVIS_TAG
+  file: youtube-player.dist.tar.gz
   on:
     tags: true
     repo: viatsyshyn/youtube-player
