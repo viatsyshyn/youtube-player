@@ -4,9 +4,11 @@ node_js:
 - '0.12'
 before_install:
 - npm install babel -g
+- npm install uglifyjs -g
 - npm install node-sass -g
 script:
 - babel --out-file ./dist/youtube-player-compiled.js ./src/youtube-player.jsx
+- uglifyjs ./dist/youtube-player-compiled.js -o ./dist/youtube-player-compiled.min.js -c -m -r jQuery
 - node-sass --output-style compressed ./src/index.sass ./dist/index.min.css
 before_deploy:
 - cp ./src/img/* ./dist/img/
