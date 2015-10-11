@@ -1,0 +1,23 @@
+language: node_js
+sudo: false
+node_js:
+- '0.12'
+before_install:
+- npm install babel -g
+- npm install node-sass -g
+script:
+- babel --out-file ./dist/youtube-player-compiled.js ./src/youtube-player.jsx
+- node-sass --output-style compressed ./src/index.sass ./dist/index.min.css
+before_deploy:
+- cp ./src/img/* ./dist/img/
+- tar -zcvf youtube-player-$TRAVIS_TAG.tar.gz dist src README.md LICENSE
+deploy:
+  edge: true
+  provider: releases
+  file: youtube-player-$TRAVIS_TAG.tar.gz
+  release-number: $TRAVIS_TAG
+  on:
+    tags: true
+    repo: viatsyshyn/youtube-player
+  api_key:
+    secure: P7OVE1m2bABcsojfEBmumazaPE1+THWYo/ZZY5lg0ku1xpPkD3BBlxaI35om32MOCWqmZT9cbZRsbIcAW/MhzfjCfHveZE53LgxwXw9NIMISyLfuw0QUaU8dC7qwxZky5aFVl3Drp/WA0Y35Q2gp9KnD/tgHg8TbkOQ1WHDzb8GKE+24aTPoByiiKPmJD0sCCgD2NfQ6/gDSGD1RWyt/EHQfPKSPszk2/5tmUOHjod0CWL2LMX6fXkVjq+zRITMDCQTtj2GjhrlS91IIYJi52NMXCiYls5En19ELGECDd8mlJ/wml0R+7/jyvmgXmCljgDwvas7FXzb85aoJqDTFMijAj4miqRB/dNIqb1Qm1Zm+Zx9aA0TCBJE+WQv3n5LoMtJJLlLFRplfUjLA/L1CPV+a/eUFg4BlpJmulXswV7smLpj9eazhLfFwjAARrefIev4dXZhbZDbWc8Rv/Tbb53YdBz5rqhWlwQbdxnD5GembCWFNy258xGSkw50z0RUryWD9giOCsPrwbm5o+zp9MUq6qDJcJFu6jn/XrsxktfcM55jf40xwhMxsS0hdtqKejQA1rb1wtkEgwN8V2LxH9vDVJvnB6Af2Cv45GD/6HoKYxtQRI+UKSfAL08pVHOkfG3t9IOubaTVkCx0hiUREfgEc5eJcbqmwzyTCbfpUolw=
