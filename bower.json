@@ -2,6 +2,13 @@
   "name": "youtube-player",
   "version": "0.0.0",
   "private": false,
+  "main": [
+    "./dist/index.min.css",
+    "./dist/youtube-player-compiled.min.js",
+    "./dist/img/mute-icon.svg",
+    "./dist/img/play-icon.svg",
+    "./dist/img/sound-icon.svg"
+  ],
   "ignore": [
     "**/.*",
     ".*/*",
@@ -11,5 +18,6 @@
   "dependencies": {
     "jquery": "~1.11.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "license": "MIT"
 }
