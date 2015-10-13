@@ -53,7 +53,8 @@
 
         var interval = null,
           player = null,
-          currentVideoId = videoId;
+          currentVideoId = videoId,
+          currentVolume = null;
 
         $videoPlayer.toggleClass('mobile', isMobile);
         $videoCnt.attr('id', videoPlayer_id);
@@ -102,8 +103,13 @@
         function onPlayerReady(event) {
           player = event.target;
 
+          if (currentVolume !== null)
+            player.setVolume(currentVolume);
+
           $videoCnt = $('#' + videoPlayer_id).hide().addClass('initialized');
           $level.width(player.getVolume() + '%');
+
+          updateProgressBarAndTimer();
 
           if ($videoPlayer.hasClass('starting'))
             setTimeout(x => play(), 1);
@@ -117,7 +123,7 @@
         }
 
         function updateProgressBarAndTimer() {
-          $timer.show().html('<strong>' + toTime(player.getCurrentTime()) + '</strong> / ' + toTime(player.getDuration()));
+          $timer.html('<strong>' + toTime(player.getCurrentTime()) + '</strong> / ' + toTime(player.getDuration()));
           $elapsed.width(100 * player.getCurrentTime() / player.getDuration() + '%');
         }
 
@@ -201,7 +207,9 @@
 
         function stop(isEvent_) {
           isEvent_ && pause(isEvent_);
-          
+
+          isMobile || $videoPlayer.removeClass('playing');
+
           $videoCnt.hide();
           $elapsed.width(0);
           isEvent_ || player && player.stopVideo();
@@ -209,10 +217,20 @@
           setTimeout(() => $videoPlayer.trigger('ended'), 34);
         }
 
+        function volume(x_) {
+          if (x_ !== undefined) {
+            currentVolume = Math.max(0, Math.min(100, x_ | 0));
+            player && player.setVolume(currentVolume);
+          }
+
+          return player ? player.getVolume() : undefined;
+        }
+
         $videoPlayer.data('youtube-player', {
           play: play,
           pause: pause,
-          stop: stop
+          stop: stop,
+          volume: volume
         });
       });
 
