@@ -116,6 +116,9 @@
 
           $videoPlayer.removeClass('starting').trigger('initialized');
 
+          $wnd.on('resize.' + videoPlayer_id, onWindowResize);
+          var isAbsolute = onWindowResize();
+
           if (isMobile) {
             $videoCnt.show();
             $videoPlayer.addClass('playing');
@@ -163,8 +166,15 @@
           videoHeight = Math.min(videoHeight, pageHeight);
           videoWidth = Math.ceil(16 * videoHeight / 9);
 
-          if (!$videoPlayer.hasClass('fixed-height'))
+          if (!$videoPlayer.hasClass('fixed-height') && $videoPlayer.hasClass('playing') )
             $videoPlayer.css('height', videoHeight + 'px');
+
+          var playerHeight = Math.ceil($videoPlayer.height());
+
+          if (!$videoPlayer.hasClass('playing') && videoHeight < playerHeight) {
+            videoHeight = playerHeight;
+            videoWidth = Math.ceil(16 * videoHeight / 9);
+          }
 
           player && player.setSize(videoWidth, videoHeight);
 
@@ -172,7 +182,6 @@
         }
 
         function play() {
-          $wnd.on('resize.' + videoPlayer_id, onWindowResize);
           var isAbsolute = onWindowResize();
 
           if (currentVideoId != videoId) {
@@ -197,8 +206,6 @@
 
         function pause(isEvent_) {
           isMobile || $videoPlayer.removeClass('playing');
-          $wnd.off('resize.' + videoPlayer_id);
-          $videoPlayer.css('height', initialHeight || '');
           clearInterval(interval);
           isEvent_ || player && player.pauseVideo();
 
@@ -209,6 +216,8 @@
           isEvent_ && pause(isEvent_);
 
           isMobile || $videoPlayer.removeClass('playing');
+
+          $videoPlayer.css('height', initialHeight || '');
 
           $videoCnt.hide();
           $elapsed.width(0);

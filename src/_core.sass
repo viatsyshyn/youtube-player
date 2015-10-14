@@ -22,6 +22,9 @@
   &.starting
     background-image: url($ui-load-icon-img)
 
+  &.playing
+    background: black !important
+
   &.playing::after
     opacity: 0
 
@@ -52,7 +55,7 @@
     z-index: 2
 
   &.playing .play-pause
-    background-image: url($ui-paused-icon-img)
+    background-image: url($ui-pause-icon-img)
 
   .sound-bar, .play-pause, .progress-bar
     cursor: pointer
