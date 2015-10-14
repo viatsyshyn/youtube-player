@@ -171,7 +171,7 @@
 
           var playerHeight = Math.ceil($videoPlayer.height());
 
-          if (!$videoPlayer.hasClass('playing') && videoHeight < playerHeight) {
+          if (videoHeight < playerHeight) {
             videoHeight = playerHeight;
             videoWidth = Math.ceil(16 * videoHeight / 9);
           }
