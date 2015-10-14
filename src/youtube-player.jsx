@@ -38,7 +38,7 @@
       this.each(function () {
         var $wnd = $(window),
           $body = $('body'),
-          $videoPlayer = $(this),
+          $videoPlayer = $(this).height($(this).height()),
           $progress = $videoPlayer.find('.progress-bar'),
           $elapsed = $progress.find('.elapsed'),
           $volume = $videoPlayer.find('.sound-bar'),
@@ -153,7 +153,7 @@
           return false;
         });
 
-        function onWindowResize() {
+        function onWindowResize(event, forceHeight_) {
           var isAbsolute = $videoCnt.hasClass('absolute'),
             playerWidth = Math.ceil($videoPlayer.width()),
             pageHeight = Math.ceil($body.height()) - (options ? options.offsetTop | 0 : 0),
@@ -166,7 +166,7 @@
           videoHeight = Math.min(videoHeight, pageHeight);
           videoWidth = Math.ceil(16 * videoHeight / 9);
 
-          if (!$videoPlayer.hasClass('fixed-height') && $videoPlayer.hasClass('playing') )
+          if (!$videoPlayer.hasClass('fixed-height') && ($videoPlayer.hasClass('playing') || forceHeight_) )
             $videoPlayer.css('height', videoHeight + 'px');
 
           var playerHeight = Math.ceil($videoPlayer.height());
@@ -182,7 +182,7 @@
         }
 
         function play() {
-          var isAbsolute = onWindowResize();
+          var isAbsolute = onWindowResize(null, true);
 
           if (currentVideoId != videoId) {
             player && player.loadVideoById(videoId, 0, 'large');
@@ -220,7 +220,7 @@
           $videoPlayer.css('height', initialHeight || '');
 
           $videoCnt.hide();
-          $elapsed.width(0);
+          $elapsed.width(0 + '%');
           isEvent_ || player && player.stopVideo();
 
           setTimeout(() => $videoPlayer.trigger('ended'), 34);

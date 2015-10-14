@@ -20,6 +20,7 @@ html
 
   body
     .wrapper
+      h2 Out-of-the-box example
       .video-player(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg)" video-id="z9mq0zGNydY")
         .video-cnt
         .sound-bar
@@ -31,12 +32,21 @@ html
         .progress-bar: .elapsed
 
     .wrapper
-      .video-player.fixed-height(style="background-image: url(https://i.ytimg.com/vi/QwhPOlIuSXM/maxresdefault.jpg)" video-id="QwhPOlIuSXM")
+      h2 Custom height examaple (height:450px)
+      .video-player.fixed-height(style="background-image: url(https://i.ytimg.com/vi/QwhPOlIuSXM/maxresdefault.jpg); height:450px" video-id="QwhPOlIuSXM")
         .video-cnt
         .play-pause
         .progress-bar: .elapsed
 
     .wrapper
+      h2 Fixed height example (.fixed-height + height: 350px)
+      .video-player(style="background-image: url(https://i.ytimg.com/vi/QwhPOlIuSXM/maxresdefault.jpg); height:350px" video-id="QwhPOlIuSXM")
+        .video-cnt
+        .play-pause
+        .progress-bar: .elapsed
+
+    .wrapper
+      h2 No embed controls and custom size example (width: 640px;height: 360px)
       .video-player.item3(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg); height: 360px; width: 640px; margin: 0 auto 50px" video-id="ZZJPnAer7EM")
         .video-cnt
 
@@ -50,6 +60,7 @@ html
         option(value=100) 100%
 
     .wrapper
+      h2 Fixed height and width example (.fixed-height + width: 640px;height: 160px)
       .video-player.fixed-height(style="background-image: url(https://i.ytimg.com/vi/z9mq0zGNydY/maxresdefault.jpg); height: 160px; width: 640px; margin: 0 auto 50px" video-id="ZZJPnAer7EM")
         .video-cnt
         .play-pause

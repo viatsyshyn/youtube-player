@@ -1,9 +1,16 @@
 .video-player
   color: $ui-color
-  height: $ui-player-height
   overflow: hidden
   background-size: cover !important
   background: transparent 50% 50% no-repeat
+
+  position: relative
+  width: 100%
+
+  &::before
+    content: ""
+    display: block
+    padding-top: 47.5% 	/* initial ratio of 16:9*/
 
   &, *
     position: relative
@@ -141,6 +148,3 @@
 
     .play-pause, .progress-bar, .sound-bar, .timer
       display: none !important
-
-    .video-player
-      height: $ui-mobile-player-height
